@@ -40,5 +40,8 @@ func main() {
 	filename := os.Args[1]
 	rom, err := RetrieveROM(filename)
 	check(err)
+	for i, b := range rom {
+		fmt.Printf("%d: %02X\n", i, b)
 
+	}
 }

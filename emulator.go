@@ -4,7 +4,7 @@ import (
 	"log"
 )
 
-type CondiitionCodes struct {
+type ConditionCodes struct {
 	Z   bool
 	S   bool
 	P   bool
@@ -24,7 +24,7 @@ type State8080 struct {
 	SP        uint16
 	PC        uint16
 	Memory    []byte
-	Cc        CondiitionCodes
+	Cc        ConditionCodes
 	IntEnable uint8
 }
 
@@ -37,10 +37,12 @@ func Emulate8080Op(state *State8080) {
 	case 0x00:
 		break // NOP
 	case 0x01: // LXI B,D16
-		UnimplementedInstruction()
+		state.B = state.Memory[state.PC+2]
+		state.C = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 	case 0x02:
-		UnimplementedInstruction()
+
 		break
 	case 0x03:
 		UnimplementedInstruction()
@@ -418,7 +420,25 @@ func Emulate8080Op(state *State8080) {
 		UnimplementedInstruction()
 		break
 	case 0x80:
-		UnimplementedInstruction()
+		answer := uint16(state.A) + uint16(state.B)
+		if answer > 255 {
+			state.Cc.CY = true
+		} else {
+			state.Cc.CY = false
+		}
+		if answer == 0 {
+			state.Cc.Z = true
+		} else {
+			state.Cc.Z = false
+		}
+		// check if sign bit is set in answer
+		if answer&0x80 == 0x80 {
+			state.Cc.S = true
+		} else {
+			state.Cc.S = false
+		}
+		//todo check parity and write function
+		state.A = uint8(answer)
 		break
 	case 0x81:
 		UnimplementedInstruction()
