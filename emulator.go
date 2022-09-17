@@ -32,6 +32,17 @@ func UnimplementedInstruction() {
 	log.Fatalln("Error: Unimplemented instruction")
 }
 
+func parity(b uint8, numBits uint8) bool {
+	var i uint8
+	var parity bool
+	for i = 0; i < numBits; i++ {
+		if (b & (1 << i)) != 0 {
+			parity = !parity
+		}
+	}
+	return parity
+}
+
 func Emulate8080Op(state *State8080) {
 	switch state.Memory[state.PC] {
 	case 0x00:
@@ -441,7 +452,12 @@ func Emulate8080Op(state *State8080) {
 		state.A = uint8(answer)
 		break
 	case 0x81:
-		UnimplementedInstruction()
+		answer := uint16(state.A) + uint16(state.C)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
 		break
 	case 0x82:
 		UnimplementedInstruction()
