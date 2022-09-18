@@ -664,7 +664,11 @@ func Emulate8080Op(state *State8080) {
 		UnimplementedInstruction()
 		break
 	case 0xc6:
-		UnimplementedInstruction()
+		answer := uint16(state.A) + state.PC + 1
+		state.Cc.Z = answer&0xff == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
 		break
 	case 0xc7:
 		UnimplementedInstruction()
