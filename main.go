@@ -46,7 +46,8 @@ func main() {
 
 	// set ticker to run at 2MHz
 	// for each tick, run state.Step()
-	ticker := time.NewTicker(time.Microsecond * 500)
+	// Todo: make this configurable
+	ticker := time.NewTicker(time.Nanosecond * 500)
 	for {
 		select {
 		case <-ticker.C:

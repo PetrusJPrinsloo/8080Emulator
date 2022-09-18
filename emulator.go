@@ -61,28 +61,44 @@ func parity(b uint8, numBits uint8) bool {
 
 func Emulate8080Op(state *State8080) error {
 	switch state.Memory[state.PC] {
+
+	// NOP
 	case 0x00:
-		break // NOP
-	case 0x01: // LXI B,D16
+		break
+
+	// LXI B, D16
+	case 0x01:
 		state.B = state.Memory[state.PC+2]
 		state.C = state.Memory[state.PC+1]
 		state.PC += 2
 		break
-	case 0x02:
 
+	// STAX B
+	case 0x02:
 		break
+
+	// INX B
 	case 0x03:
-		UnimplementedInstruction()
+		state.B++
+		state.C++
 		break
+
+	// INR B
 	case 0x04:
-		UnimplementedInstruction()
+		state.B++
 		break
+
+	// DCR B
 	case 0x05:
-		UnimplementedInstruction()
+		state.B--
 		break
+
+	// MVI B, D8
 	case 0x06:
 		UnimplementedInstruction()
 		break
+
+	// RLC
 	case 0x07:
 		UnimplementedInstruction()
 		break
@@ -446,7 +462,7 @@ func Emulate8080Op(state *State8080) error {
 	case 0x7f:
 		UnimplementedInstruction()
 		break
-	case 0x80:
+	case 0x80: // ADD A, B
 		answer := uint16(state.A) + uint16(state.B)
 		if answer > 255 {
 			state.Cc.CY = true
