@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 )
 
@@ -28,6 +29,20 @@ type State8080 struct {
 	IntEnable uint8
 }
 
+func NewState8080(rom []byte) *State8080 {
+	state := State8080{}
+	state.Memory = make([]byte, 0x10000)
+	copy(state.Memory[0x0000:], rom)
+	state.SP = 0x0000
+	state.PC = 0x0000
+	state.IntEnable = 0
+	return &state
+}
+
+func (state *State8080) Step() error {
+	return Emulate8080Op(state)
+}
+
 func UnimplementedInstruction() {
 	log.Fatalln("Error: Unimplemented instruction")
 }
@@ -43,7 +58,7 @@ func parity(b uint8, numBits uint8) bool {
 	return parity
 }
 
-func Emulate8080Op(state *State8080) {
+func Emulate8080Op(state *State8080) error {
 	switch state.Memory[state.PC] {
 	case 0x00:
 		break // NOP
@@ -848,8 +863,7 @@ func Emulate8080Op(state *State8080) {
 		UnimplementedInstruction()
 		break
 	default:
-		log.Fatalf("Unknown opcode: %X", state.Memory[state.PC])
-
+		return fmt.Errorf(fmt.Sprintf("Unknown opcode: %X", state.Memory[state.PC]))
 	}
-
+	return nil
 }
