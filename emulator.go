@@ -472,7 +472,13 @@ func Emulate8080Op(state *State8080) {
 		UnimplementedInstruction()
 		break
 	case 0x86:
-		UnimplementedInstruction()
+		offset := (uint16(state.H) << 8) | uint16(state.L)
+		answer := uint16(state.A) + uint16(state.Memory[offset])
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
 		break
 	case 0x87:
 		UnimplementedInstruction()
