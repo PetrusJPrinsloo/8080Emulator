@@ -448,7 +448,7 @@ func Emulate8080Op(state *State8080) {
 		} else {
 			state.Cc.S = false
 		}
-		//todo check parity and write function
+		state.Cc.P = parity(uint8(answer&0xff), 8)
 		state.A = uint8(answer)
 		break
 	case 0x81:
