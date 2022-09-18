@@ -27,9 +27,10 @@ type State8080 struct {
 	Memory    []byte
 	Cc        ConditionCodes
 	IntEnable uint8
+	Quit      chan struct{}
 }
 
-func NewState8080(rom []byte) *State8080 {
+func NewState8080(rom []byte, quit chan struct{}) *State8080 {
 	state := State8080{}
 	state.Memory = make([]byte, 0x10000)
 	copy(state.Memory[0x0000:], rom)
@@ -863,7 +864,8 @@ func Emulate8080Op(state *State8080) error {
 		UnimplementedInstruction()
 		break
 	default:
-		return fmt.Errorf(fmt.Sprintf("Unknown opcode: %X", state.Memory[state.PC]))
+		fmt.Printf("Unknown opcode: %X", state.Memory[state.PC])
+		state.Quit <- struct{}{}
 	}
 	return nil
 }

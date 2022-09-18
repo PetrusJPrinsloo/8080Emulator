@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 func check(e error) {
@@ -40,9 +41,19 @@ func main() {
 	filename := os.Args[1]
 	rom, err := RetrieveROM(filename)
 	check(err)
-	state := NewState8080(rom)
-	for err == nil {
-		fmt.Printf("%d: %02X\n")
-		err = state.Step()
+	quit := make(chan struct{})
+	state := NewState8080(rom, quit)
+
+	// set ticker to run at 2MHz
+	// for each tick, run state.Step()
+	ticker := time.NewTicker(time.Microsecond * 500)
+	for {
+		select {
+		case <-ticker.C:
+			err = state.Step()
+		case <-quit:
+			ticker.Stop()
+			return
+		}
 	}
 }
