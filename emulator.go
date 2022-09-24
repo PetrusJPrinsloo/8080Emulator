@@ -680,18 +680,52 @@ func Emulate8080Op(state *State8080) error {
 		state.A = uint8(answer & 0xff)
 		state.PC++
 		break
+
+	// ADD A, D
 	case 0x82:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) + uint16(state.D)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
+
+	// ADD A, E
 	case 0x83:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) + uint16(state.E)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
+
+	// ADD A, H
 	case 0x84:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) + uint16(state.H)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
+
+	// ADD A, L
 	case 0x85:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) + uint16(state.L)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
+
+	// ADD A, M
 	case 0x86:
 		offset := (uint16(state.H) << 8) | uint16(state.L)
 		answer := uint16(state.A) + uint16(state.Memory[offset])
@@ -702,9 +736,19 @@ func Emulate8080Op(state *State8080) error {
 		state.A = uint8(answer & 0xff)
 		state.PC++
 		break
+
+	// ADD A, A
 	case 0x87:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) + uint16(state.A)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
+
+	// ADC A, B
 	case 0x88:
 		UnimplementedInstruction(state)
 		break
