@@ -248,41 +248,54 @@ func Emulate8080Op(state *State8080) error {
 	case 0x28:
 		state.PC++
 		break
+	// DAD H
 	case 0x29:
 		UnimplementedInstruction(state)
 		break
+	// LHLD adr
 	case 0x2a:
 		UnimplementedInstruction(state)
 		break
+	// DCX H
 	case 0x2b:
 		UnimplementedInstruction(state)
 		break
+	// INR L
 	case 0x2c:
-		UnimplementedInstruction(state)
+		state.L++
+		state.PC++
 		break
+	// DCR L
 	case 0x2d:
-		UnimplementedInstruction(state)
+		state.L--
+		state.PC++
 		break
+	// MVI L, D8
 	case 0x2e:
 		UnimplementedInstruction(state)
 		break
+	// CMA
 	case 0x2f:
 		UnimplementedInstruction(state)
 		break
+	// NOP
 	case 0x30:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
+	// LXI SP, D16
 	case 0x31:
 		UnimplementedInstruction(state)
 		break
+	// STA adr
 	case 0x32:
 		UnimplementedInstruction(state)
 		break
+	// INX SP
 	case 0x33:
 		UnimplementedInstruction(state)
 		break
+	// INR M
 	case 0x34:
-		UnimplementedInstruction(state)
 		break
 	case 0x35:
 		UnimplementedInstruction(state)
