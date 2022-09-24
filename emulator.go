@@ -341,197 +341,309 @@ func Emulate8080Op(state *State8080) error {
 	case 0x3f:
 		UnimplementedInstruction(state)
 		break
+	// MOV B, B
 	case 0x40:
-		UnimplementedInstruction(state)
+		state.B = state.B
+		state.PC++
 		break
+	// MOV B, C
 	case 0x41:
-		UnimplementedInstruction(state)
+		state.B = state.C
+		state.PC++
 		break
+	// MOV B, D
 	case 0x42:
-		UnimplementedInstruction(state)
+		state.B = state.D
+		state.PC++
 		break
+	// MOV B, E
 	case 0x43:
-		UnimplementedInstruction(state)
+		state.B = state.E
+		state.PC++
 		break
+	// MOV B, H
 	case 0x44:
-		UnimplementedInstruction(state)
+		state.B = state.H
+		state.PC++
 		break
+	// MOV B, L
 	case 0x45:
-		UnimplementedInstruction(state)
+		state.B = state.L
 		break
+	// MOV B, M
 	case 0x46:
 		UnimplementedInstruction(state)
 		break
+	// MOV B, A
 	case 0x47:
-		UnimplementedInstruction(state)
+		state.B = state.A
+		state.PC++
 		break
+	// MOV C, B
 	case 0x48:
-		UnimplementedInstruction(state)
+		state.C = state.B
+		state.PC++
 		break
+	// MOV C, C
 	case 0x49:
-		UnimplementedInstruction(state)
+		state.C = state.C
+		state.PC++
 		break
+	// MOV C, D
 	case 0x4a:
-		UnimplementedInstruction(state)
+		state.C = state.D
+		state.PC++
 		break
+	// MOV C, E
 	case 0x4b:
-		UnimplementedInstruction(state)
+		state.C = state.E
+		state.PC++
 		break
+	// MOV C, H
 	case 0x4c:
-		UnimplementedInstruction(state)
+		state.C = state.H
+		state.PC++
 		break
+	// MOV C, L
 	case 0x4d:
-		UnimplementedInstruction(state)
+		state.C = state.L
+		state.PC++
 		break
+	// MOV C, M
 	case 0x4e:
 		UnimplementedInstruction(state)
 		break
+	// MOV C, A
 	case 0x4f:
-		UnimplementedInstruction(state)
+		state.C = state.A
+		state.PC++
 		break
+	// MOV D, B
 	case 0x50:
-		UnimplementedInstruction(state)
+		state.D = state.B
+		state.PC++
 		break
+	// MOV D, C
 	case 0x51:
-		UnimplementedInstruction(state)
+		state.D = state.C
+		state.PC++
 		break
+	// MOV D, D
 	case 0x52:
-		UnimplementedInstruction(state)
+		state.D = state.D
+		state.PC++
 		break
+	// MOV D, E
 	case 0x53:
-		UnimplementedInstruction(state)
+		state.D = state.E
+		state.PC++
 		break
+	// MOV D, H
 	case 0x54:
-		UnimplementedInstruction(state)
+		state.D = state.H
+		state.PC++
 		break
+	// MOV D, L
 	case 0x55:
-		UnimplementedInstruction(state)
+		state.D = state.L
+		state.PC++
 		break
+	// MOV D, M
 	case 0x56:
 		UnimplementedInstruction(state)
 		break
+	// MOV D, A
 	case 0x57:
-		UnimplementedInstruction(state)
+		state.D = state.A
+		state.PC++
 		break
+	// MOV E, B
 	case 0x58:
-		UnimplementedInstruction(state)
+		state.E = state.B
+		state.PC++
 		break
+	// MOV E, C
 	case 0x59:
-		UnimplementedInstruction(state)
+		state.E = state.C
+		state.PC++
 		break
+	// MOV E, D
 	case 0x5a:
-		UnimplementedInstruction(state)
+		state.E = state.D
+		state.PC++
 		break
+	// MOV E, E
 	case 0x5b:
-		UnimplementedInstruction(state)
+		state.E = state.E
+		state.PC++
 		break
+	// MOV E, H
 	case 0x5c:
-		UnimplementedInstruction(state)
+		state.E = state.H
+		state.PC++
 		break
+	// MOV E, L
 	case 0x5d:
-		UnimplementedInstruction(state)
+		state.E = state.L
+		state.PC++
 		break
+	// MOV E, M
 	case 0x5e:
 		UnimplementedInstruction(state)
 		break
+	// MOV E, A
 	case 0x5f:
-		UnimplementedInstruction(state)
+		state.E = state.A
+		state.PC++
 		break
+	// MOV H, B
 	case 0x60:
-		UnimplementedInstruction(state)
+		state.H = state.B
+		state.PC++
 		break
+	// MOV H, C
 	case 0x61:
-		UnimplementedInstruction(state)
+		state.H = state.C
+		state.PC++
 		break
+	// MOV H, D
 	case 0x62:
-		UnimplementedInstruction(state)
+		state.H = state.D
+		state.PC++
 		break
+	// MOV H, E
 	case 0x63:
-		UnimplementedInstruction(state)
+		state.H = state.E
+		state.PC++
 		break
+	// MOV H, H
 	case 0x64:
-		UnimplementedInstruction(state)
+		state.H = state.H
+		state.PC++
 		break
+	// MOV H, L
 	case 0x65:
-		UnimplementedInstruction(state)
+		state.H = state.L
+		state.PC++
 		break
+	// MOV H, M
 	case 0x66:
 		UnimplementedInstruction(state)
 		break
+	// MOV H, A
 	case 0x67:
-		UnimplementedInstruction(state)
+		state.H = state.A
+		state.PC++
 		break
+	// MOV L, B
 	case 0x68:
-		UnimplementedInstruction(state)
+		state.L = state.B
+		state.PC++
 		break
+	// MOV L, C
 	case 0x69:
-		UnimplementedInstruction(state)
+		state.L = state.C
+		state.PC++
 		break
+	// MOV L, D
 	case 0x6a:
-		UnimplementedInstruction(state)
+		state.L = state.D
+		state.PC++
 		break
+	// MOV L, E
 	case 0x6b:
-		UnimplementedInstruction(state)
+		state.L = state.E
+		state.PC++
 		break
+	// MOV L, H
 	case 0x6c:
-		UnimplementedInstruction(state)
+		state.L = state.H
+		state.PC++
 		break
+	// MOV L, L
 	case 0x6d:
-		UnimplementedInstruction(state)
+		state.L = state.L
+		state.PC++
 		break
+	// MOV L, M
 	case 0x6e:
 		UnimplementedInstruction(state)
 		break
+	// MOV L, A
 	case 0x6f:
-		UnimplementedInstruction(state)
+		state.L = state.A
+		state.PC++
 		break
+	// MOV M, B
 	case 0x70:
 		UnimplementedInstruction(state)
 		break
+	// MOV M, C
 	case 0x71:
 		UnimplementedInstruction(state)
 		break
+	// MOV M, D
 	case 0x72:
 		UnimplementedInstruction(state)
 		break
+	// MOV M, E
 	case 0x73:
 		UnimplementedInstruction(state)
 		break
+	// MOV M, H
 	case 0x74:
 		UnimplementedInstruction(state)
 		break
+	// MOV M, L
 	case 0x75:
 		UnimplementedInstruction(state)
 		break
+	// HLT
 	case 0x76:
-		UnimplementedInstruction(state)
+		state.Quit <- struct{}{}
 		break
+	// MOV M, A
 	case 0x77:
 		UnimplementedInstruction(state)
 		break
+	// MOV A, B
 	case 0x78:
-		UnimplementedInstruction(state)
+		state.A = state.B
+		state.PC++
 		break
+	// MOV A, C
 	case 0x79:
-		UnimplementedInstruction(state)
+		state.A = state.C
+		state.PC++
 		break
+	// MOV A, D
 	case 0x7a:
-		UnimplementedInstruction(state)
+		state.A = state.D
+		state.PC++
 		break
+	// MOV A, E
 	case 0x7b:
-		UnimplementedInstruction(state)
+		state.A = state.E
+		state.PC++
 		break
+	// MOV A, H
 	case 0x7c:
-		UnimplementedInstruction(state)
+		state.A = state.H
+		state.PC++
 		break
+	// MOV A, L
 	case 0x7d:
-		UnimplementedInstruction(state)
+		state.A = state.L
+		state.PC++
 		break
+	// MOV A, M
 	case 0x7e:
 		UnimplementedInstruction(state)
 		break
+	// MOV A, A
 	case 0x7f:
-		UnimplementedInstruction(state)
+		state.A = state.A
+		state.PC++
 		break
 
 	// ADD A, B
