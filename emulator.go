@@ -70,27 +70,32 @@ func Emulate8080Op(state *State8080) error {
 	case 0x01:
 		state.B = state.Memory[state.PC+2]
 		state.C = state.Memory[state.PC+1]
-		state.PC += 2
+		state.PC += 3
 		break
 
 	// STAX B
 	case 0x02:
+		state.Memory[(uint16(state.B)<<8)|uint16(state.C)] = state.A
+		state.PC++
 		break
 
 	// INX B
 	case 0x03:
 		state.B++
 		state.C++
+		state.PC++
 		break
 
 	// INR B
 	case 0x04:
 		state.B++
+		state.PC++
 		break
 
 	// DCR B
 	case 0x05:
 		state.B--
+		state.PC++
 		break
 
 	// MVI B, D8
@@ -102,26 +107,35 @@ func Emulate8080Op(state *State8080) error {
 	case 0x07:
 		UnimplementedInstruction()
 		break
+	// NOP
 	case 0x08:
-		UnimplementedInstruction()
 		break
+	// DAD B
 	case 0x09:
 		UnimplementedInstruction()
 		break
+	// LDAX B
 	case 0x0a:
 		UnimplementedInstruction()
 		break
+	// DCX B
 	case 0x0b:
 		UnimplementedInstruction()
 		break
+	// INR C
 	case 0x0c:
-		UnimplementedInstruction()
+		state.C++
+		state.PC++
 		break
+	// DCR C
 	case 0x0d:
-		UnimplementedInstruction()
+		state.C--
+		state.PC++
 		break
+	// MVI C, D8
 	case 0x0e:
-		UnimplementedInstruction()
+		state.Memory[state.PC+1] = state.C
+		state.PC += 2
 		break
 	case 0x0f:
 		UnimplementedInstruction()
@@ -462,7 +476,9 @@ func Emulate8080Op(state *State8080) error {
 	case 0x7f:
 		UnimplementedInstruction()
 		break
-	case 0x80: // ADD A, B
+
+	// ADD A, B
+	case 0x80:
 		answer := uint16(state.A) + uint16(state.B)
 		if answer > 255 {
 			state.Cc.CY = true
@@ -482,7 +498,10 @@ func Emulate8080Op(state *State8080) error {
 		}
 		state.Cc.P = parity(uint8(answer&0xff), 8)
 		state.A = uint8(answer)
+		state.PC++
 		break
+
+	// ADD A, C
 	case 0x81:
 		answer := uint16(state.A) + uint16(state.C)
 		state.Cc.Z = (answer & 0xff) == 0
@@ -490,6 +509,7 @@ func Emulate8080Op(state *State8080) error {
 		state.Cc.CY = answer > 0xff
 		state.Cc.P = parity(uint8(answer&0xff), 8)
 		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
 	case 0x82:
 		UnimplementedInstruction()
@@ -511,6 +531,7 @@ func Emulate8080Op(state *State8080) error {
 		state.Cc.CY = answer > 0xff
 		state.Cc.P = parity(uint8(answer&0xff), 8)
 		state.A = uint8(answer & 0xff)
+		state.PC++
 		break
 	case 0x87:
 		UnimplementedInstruction()
@@ -707,6 +728,7 @@ func Emulate8080Op(state *State8080) error {
 		state.Cc.S = (answer & 0x80) != 0
 		state.Cc.CY = answer > 0xff
 		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.PC += 2
 		break
 	case 0xc7:
 		UnimplementedInstruction()
