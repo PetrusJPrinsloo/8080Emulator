@@ -37,6 +37,7 @@ func NewState8080(rom []byte, quit chan struct{}) *State8080 {
 	state.SP = 0x0000
 	state.PC = 0x0000
 	state.IntEnable = 0
+	state.Quit = quit
 	return &state
 }
 
@@ -44,7 +45,8 @@ func (state *State8080) Step() error {
 	return Emulate8080Op(state)
 }
 
-func UnimplementedInstruction() {
+func UnimplementedInstruction(state *State8080) {
+	state.PC++
 	log.Fatalln("Error: Unimplemented instruction")
 }
 
@@ -100,27 +102,27 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI B, D8
 	case 0x06:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 
 	// RLC
 	case 0x07:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	// NOP
 	case 0x08:
 		break
 	// DAD B
 	case 0x09:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	// LDAX B
 	case 0x0a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	// DCX B
 	case 0x0b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	// INR C
 	case 0x0c:
@@ -137,344 +139,375 @@ func Emulate8080Op(state *State8080) error {
 		state.Memory[state.PC+1] = state.C
 		state.PC += 2
 		break
+	// RRC
 	case 0x0f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// NOP
 	case 0x10:
-		UnimplementedInstruction()
 		break
+	// LXI D, D16
 	case 0x11:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// STAX D
 	case 0x12:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// INX D
 	case 0x13:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// INR D
 	case 0x14:
-		UnimplementedInstruction()
+		state.D++
+		state.PC++
 		break
+	// DCR D
 	case 0x15:
-		UnimplementedInstruction()
+		state.D--
+		state.PC++
 		break
+	// MVI D, D8
 	case 0x16:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// RAL
 	case 0x17:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// NOP
 	case 0x18:
-		UnimplementedInstruction()
+		state.PC++
 		break
+	// DAD D
 	case 0x19:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// LDAX D
 	case 0x1a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// DCX D
 	case 0x1b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// INR E
 	case 0x1c:
-		UnimplementedInstruction()
+		state.E++
+		state.PC++
 		break
+	// DCR E
 	case 0x1d:
-		UnimplementedInstruction()
+		state.E--
+		state.PC++
 		break
+	// MVI E, D8
 	case 0x1e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// RAR
 	case 0x1f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// NOP
 	case 0x20:
-		UnimplementedInstruction()
+		state.PC++
 		break
+	// LXI H, D16
 	case 0x21:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// SHLD adr
 	case 0x22:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// INX H
 	case 0x23:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// INR H
 	case 0x24:
-		UnimplementedInstruction()
+		state.H++
+		state.PC++
 		break
+	// DCR H
 	case 0x25:
-		UnimplementedInstruction()
+		state.H--
+		state.PC++
 		break
+	// MVI H, D8
 	case 0x26:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// DAA
 	case 0x27:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
+	// NOP
 	case 0x28:
-		UnimplementedInstruction()
+		state.PC++
 		break
 	case 0x29:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x2f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x30:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x31:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x32:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x33:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x34:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x35:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x36:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x37:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x38:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x39:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x3f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x40:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x41:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x42:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x43:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x44:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x45:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x46:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x47:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x48:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x49:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x4f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x50:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x51:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x52:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x53:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x54:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x55:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x56:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x57:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x58:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x59:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x5f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x60:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x61:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x62:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x63:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x64:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x65:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x66:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x67:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x68:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x69:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x6f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x70:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x71:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x72:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x73:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x74:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x75:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x76:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x77:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x78:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x79:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x7f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 
 	// ADD A, B
@@ -512,16 +545,16 @@ func Emulate8080Op(state *State8080) error {
 		state.PC++
 		break
 	case 0x82:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x83:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x84:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x85:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x86:
 		offset := (uint16(state.H) << 8) | uint16(state.L)
@@ -534,193 +567,193 @@ func Emulate8080Op(state *State8080) error {
 		state.PC++
 		break
 	case 0x87:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x88:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x89:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x8f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x90:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x91:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x92:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x93:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x94:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x95:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x96:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x97:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x98:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x99:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9a:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9b:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9c:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9d:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9e:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0x9f:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa6:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xa9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xaa:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xab:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xac:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xad:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xae:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xaf:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb6:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xb9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xba:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xbb:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xbc:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xbd:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xbe:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xbf:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc6:
 		answer := uint16(state.A) + state.PC + 1
@@ -731,175 +764,175 @@ func Emulate8080Op(state *State8080) error {
 		state.PC += 2
 		break
 	case 0xc7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xc9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xca:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xcb:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xcc:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xcd:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xce:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xcf:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd6:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xd9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xda:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xdb:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xdc:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xdd:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xde:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xdf:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe6:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xe9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xea:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xeb:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xec:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xed:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xee:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xef:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf0:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf1:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf2:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf3:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf4:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf5:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf6:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf7:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf8:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xf9:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xfa:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xfb:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xfc:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xfd:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xfe:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	case 0xff:
-		UnimplementedInstruction()
+		UnimplementedInstruction(state)
 		break
 	default:
 		fmt.Printf("Unknown opcode: %X", state.Memory[state.PC])
