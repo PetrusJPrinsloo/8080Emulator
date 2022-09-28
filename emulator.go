@@ -6,12 +6,12 @@ import (
 )
 
 type ConditionCodes struct {
-	Z   bool
-	S   bool
-	P   bool
-	CY  bool
-	AC  bool
-	Pad uint8
+	Z   bool  // Zero
+	S   bool  // Sign
+	P   bool  // Parity
+	CY  bool  // Carry
+	AC  bool  // Auxiliary Carry
+	Pad uint8 // Padding
 }
 
 type State8080 struct {
@@ -773,78 +773,190 @@ func Emulate8080Op(state *State8080) error {
 	case 0x8f:
 		UnimplementedInstruction(state)
 		break
+
+	// SUB B
 	case 0x90:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.B)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB C
 	case 0x91:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.C)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB D
 	case 0x92:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.D)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB E
 	case 0x93:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.E)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB H
 	case 0x94:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.H)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB L
 	case 0x95:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.L)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SUB M
 	case 0x96:
 		UnimplementedInstruction(state)
 		break
+
+	// SUB A
 	case 0x97:
-		UnimplementedInstruction(state)
+		answer := uint16(state.A) - uint16(state.A)
+		state.Cc.Z = (answer & 0xff) == 0
+		state.Cc.S = (answer & 0x80) != 0
+		state.Cc.CY = answer > 0xff
+		state.Cc.P = parity(uint8(answer&0xff), 8)
+		state.A = uint8(answer & 0xff)
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// SBB B
 	case 0x98:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB C
 	case 0x99:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB D
 	case 0x9a:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB E
 	case 0x9b:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB H
 	case 0x9c:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB L
 	case 0x9d:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB M
 	case 0x9e:
 		UnimplementedInstruction(state)
 		break
+
+	// SBB A
 	case 0x9f:
 		UnimplementedInstruction(state)
 		break
+
+	// ANA B
 	case 0xa0:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.B
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA C
 	case 0xa1:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.C
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA D
 	case 0xa2:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.D
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA E
 	case 0xa3:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.E
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA H
 	case 0xa4:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.H
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA L
 	case 0xa5:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.L
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ANA M
 	case 0xa6:
 		UnimplementedInstruction(state)
 		break
+
+	// ANA A
 	case 0xa7:
-		UnimplementedInstruction(state)
+		state.A = state.A & state.A
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
 	case 0xa8:
 		UnimplementedInstruction(state)
 		break
