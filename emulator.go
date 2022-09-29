@@ -957,56 +957,121 @@ func Emulate8080Op(state *State8080) error {
 		state.PC++
 		break
 
+	// XRA B
 	case 0xa8:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.B
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA C
 	case 0xa9:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.C
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA D
 	case 0xaa:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.D
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA E
 	case 0xab:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.E
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA H
 	case 0xac:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.H
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA L
 	case 0xad:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.L
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// XRA M
 	case 0xae:
 		UnimplementedInstruction(state)
 		break
+
+	// XRA A
 	case 0xaf:
-		UnimplementedInstruction(state)
+		state.A = state.A ^ state.A
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA B
 	case 0xb0:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.B
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA C
 	case 0xb1:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.C
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA D
 	case 0xb2:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.D
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA E
 	case 0xb3:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.E
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA H
 	case 0xb4:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.H
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA L
 	case 0xb5:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.L
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// ORA M
 	case 0xb6:
 		UnimplementedInstruction(state)
 		break
+
+	// ORA A
 	case 0xb7:
-		UnimplementedInstruction(state)
+		state.A = state.A | state.A
+		state.Cc.Z = state.A == 0
+		state.PC++
 		break
+
+	// CMP B
 	case 0xb8:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.B
+		state.Cc.S = (state.A - state.B) > 0x7f
+		state.Cc.P = parity(state.A-state.B, 8)
+		state.Cc.CY = state.A < state.B
+		state.PC++
 		break
 	case 0xb9:
 		UnimplementedInstruction(state)
