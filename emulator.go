@@ -1073,24 +1073,38 @@ func Emulate8080Op(state *State8080) error {
 		state.Cc.CY = state.A < state.B
 		state.PC++
 		break
+
+	// CMP C
 	case 0xb9:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP D
 	case 0xba:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP E
 	case 0xbb:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP H
 	case 0xbc:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP L
 	case 0xbd:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP M
 	case 0xbe:
 		UnimplementedInstruction(state)
 		break
+
+	// CMP A
 	case 0xbf:
 		UnimplementedInstruction(state)
 		break
@@ -1118,9 +1132,13 @@ func Emulate8080Op(state *State8080) error {
 	case 0xc3:
 		state.PC = (uint16(state.Memory[state.PC+2]) << 8) | uint16(state.Memory[state.PC+1])
 		break
+
+	// CNZ adr
 	case 0xc4:
 		UnimplementedInstruction(state)
 		break
+
+	// PUSH B
 	case 0xc5:
 		UnimplementedInstruction(state)
 		break
@@ -1132,26 +1150,40 @@ func Emulate8080Op(state *State8080) error {
 		state.Cc.P = parity(uint8(answer&0xff), 8)
 		state.PC += 2
 		break
+
+	// RST 0
 	case 0xc7:
 		UnimplementedInstruction(state)
 		break
+
+	// RZ
 	case 0xc8:
 		UnimplementedInstruction(state)
 		break
+
+	// RET
 	case 0xc9:
 		UnimplementedInstruction(state)
 		break
+
+	// JZ adr
 	case 0xca:
 		UnimplementedInstruction(state)
 		break
+
+	// NOP
 	case 0xcb:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
+
+	// CZ adr
 	case 0xcc:
 		UnimplementedInstruction(state)
 		break
+
+	// CALL adr
 	case 0xcd:
-		UnimplementedInstruction(state)
+
 		break
 	case 0xce:
 		UnimplementedInstruction(state)
