@@ -1265,105 +1265,173 @@ func Emulate8080Op(state *State8080) error {
 	case 0xdd:
 		state.PC++
 		break
+
+	// SBI D8
 	case 0xde:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 3
 	case 0xdf:
 		UnimplementedInstruction(state)
 		break
+
+	// RPO
 	case 0xe0:
 		UnimplementedInstruction(state)
 		break
+
+	// POP H
 	case 0xe1:
 		UnimplementedInstruction(state)
 		break
+
+	// JPO adr
 	case 0xe2:
 		UnimplementedInstruction(state)
 		break
+
+	// XTHL
 	case 0xe3:
 		UnimplementedInstruction(state)
 		break
+
+	// CPO adr
 	case 0xe4:
 		UnimplementedInstruction(state)
 		break
+
+	// PUSH H
 	case 0xe5:
 		UnimplementedInstruction(state)
 		break
+
+	// ANI D8
 	case 0xe6:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 4
 	case 0xe7:
 		UnimplementedInstruction(state)
 		break
+
+	// RPE
 	case 0xe8:
 		UnimplementedInstruction(state)
 		break
+
+	// PCHL
 	case 0xe9:
 		UnimplementedInstruction(state)
 		break
+
+	// JPE adr
 	case 0xea:
 		UnimplementedInstruction(state)
 		break
+
+	// XCHG
 	case 0xeb:
 		UnimplementedInstruction(state)
 		break
+
+	// CPE adr
 	case 0xec:
 		UnimplementedInstruction(state)
 		break
+
+	// NOP
 	case 0xed:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
+
+	// XRI D8
 	case 0xee:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 5
 	case 0xef:
 		UnimplementedInstruction(state)
 		break
+
+	// RP
 	case 0xf0:
 		UnimplementedInstruction(state)
 		break
+
+	// POP PSW
 	case 0xf1:
 		UnimplementedInstruction(state)
 		break
+
+	// JP adr
 	case 0xf2:
 		UnimplementedInstruction(state)
 		break
+
+	// DI
 	case 0xf3:
 		UnimplementedInstruction(state)
 		break
+
+	// CP adr
 	case 0xf4:
 		UnimplementedInstruction(state)
 		break
+
+	// PUSH PSW
 	case 0xf5:
 		UnimplementedInstruction(state)
 		break
+
+	// ORI D8
 	case 0xf6:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 6
 	case 0xf7:
 		UnimplementedInstruction(state)
 		break
+
+	// RM
 	case 0xf8:
 		UnimplementedInstruction(state)
 		break
+
+	// SPHL
 	case 0xf9:
 		UnimplementedInstruction(state)
 		break
+
+	// JM adr
 	case 0xfa:
 		UnimplementedInstruction(state)
 		break
+
+	// EI
 	case 0xfb:
 		UnimplementedInstruction(state)
 		break
+
+	// CM adr
 	case 0xfc:
 		UnimplementedInstruction(state)
 		break
+
+	// NOP
 	case 0xfd:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
+
+	// CPI D8
 	case 0xfe:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 7
 	case 0xff:
 		UnimplementedInstruction(state)
 		break
