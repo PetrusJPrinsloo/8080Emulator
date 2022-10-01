@@ -1245,17 +1245,25 @@ func Emulate8080Op(state *State8080) error {
 	case 0xd9:
 		state.PC++
 		break
+
+	// JC adr
 	case 0xda:
 		UnimplementedInstruction(state)
 		break
+
+	// IN D8
 	case 0xdb:
 		UnimplementedInstruction(state)
 		break
+
+	// CC adr
 	case 0xdc:
 		UnimplementedInstruction(state)
 		break
+
+	// NOP
 	case 0xdd:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
 	case 0xde:
 		UnimplementedInstruction(state)
