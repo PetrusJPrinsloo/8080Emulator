@@ -1183,43 +1183,67 @@ func Emulate8080Op(state *State8080) error {
 
 	// CALL adr
 	case 0xcd:
-
+		UnimplementedInstruction(state)
 		break
+
+	// ACI D8
 	case 0xce:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 1
 	case 0xcf:
 		UnimplementedInstruction(state)
 		break
+
+	// RNC
 	case 0xd0:
 		UnimplementedInstruction(state)
 		break
+
+	// POP D
 	case 0xd1:
 		UnimplementedInstruction(state)
 		break
+
+	// JNC adr
 	case 0xd2:
 		UnimplementedInstruction(state)
 		break
+
+	// OUT D8
 	case 0xd3:
 		UnimplementedInstruction(state)
 		break
+
+	// CNC adr
 	case 0xd4:
 		UnimplementedInstruction(state)
 		break
+
+	// PUSH D
 	case 0xd5:
 		UnimplementedInstruction(state)
 		break
+
+	// SUI D8
 	case 0xd6:
 		UnimplementedInstruction(state)
 		break
+
+	// RST 2
 	case 0xd7:
 		UnimplementedInstruction(state)
 		break
+
+	// RC
 	case 0xd8:
 		UnimplementedInstruction(state)
 		break
+
+	// NOP
 	case 0xd9:
-		UnimplementedInstruction(state)
+		state.PC++
 		break
 	case 0xda:
 		UnimplementedInstruction(state)
