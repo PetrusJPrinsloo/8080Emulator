@@ -109,301 +109,371 @@ func Emulate8080Op(state *State8080) error {
 	case 0x07:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x08:
 		break
+
 	// DAD B
 	case 0x09:
 		UnimplementedInstruction(state)
 		break
+
 	// LDAX B
 	case 0x0a:
 		UnimplementedInstruction(state)
 		break
+
 	// DCX B
 	case 0x0b:
 		UnimplementedInstruction(state)
 		break
+
 	// INR C
 	case 0x0c:
 		state.C++
 		state.PC++
 		break
+
 	// DCR C
 	case 0x0d:
 		state.C--
 		state.PC++
 		break
+
 	// MVI C, D8
 	case 0x0e:
 		state.Memory[state.PC+1] = state.C
 		state.PC += 2
 		break
+
 	// RRC
 	case 0x0f:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x10:
 		break
+
 	// LXI D, D16
 	case 0x11:
 		UnimplementedInstruction(state)
 		break
+
 	// STAX D
 	case 0x12:
 		UnimplementedInstruction(state)
 		break
+
 	// INX D
 	case 0x13:
 		UnimplementedInstruction(state)
 		break
+
 	// INR D
 	case 0x14:
 		state.D++
 		state.PC++
 		break
+
 	// DCR D
 	case 0x15:
 		state.D--
 		state.PC++
 		break
+
 	// MVI D, D8
 	case 0x16:
 		UnimplementedInstruction(state)
 		break
+
 	// RAL
 	case 0x17:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x18:
 		state.PC++
 		break
+
 	// DAD D
 	case 0x19:
 		UnimplementedInstruction(state)
 		break
+
 	// LDAX D
 	case 0x1a:
 		UnimplementedInstruction(state)
 		break
+
 	// DCX D
 	case 0x1b:
 		UnimplementedInstruction(state)
 		break
+
 	// INR E
 	case 0x1c:
 		state.E++
 		state.PC++
 		break
+
 	// DCR E
 	case 0x1d:
 		state.E--
 		state.PC++
 		break
+
 	// MVI E, D8
 	case 0x1e:
 		UnimplementedInstruction(state)
 		break
+
 	// RAR
 	case 0x1f:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x20:
 		state.PC++
 		break
+
 	// LXI H, D16
 	case 0x21:
 		UnimplementedInstruction(state)
 		break
+
 	// SHLD adr
 	case 0x22:
 		UnimplementedInstruction(state)
 		break
+
 	// INX H
 	case 0x23:
 		UnimplementedInstruction(state)
 		break
+
 	// INR H
 	case 0x24:
 		state.H++
 		state.PC++
 		break
+
 	// DCR H
 	case 0x25:
 		state.H--
 		state.PC++
 		break
+
 	// MVI H, D8
 	case 0x26:
 		UnimplementedInstruction(state)
 		break
+
 	// DAA
 	case 0x27:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x28:
 		state.PC++
 		break
+
 	// DAD H
 	case 0x29:
 		UnimplementedInstruction(state)
 		break
+
 	// LHLD adr
 	case 0x2a:
 		UnimplementedInstruction(state)
 		break
+
 	// DCX H
 	case 0x2b:
 		UnimplementedInstruction(state)
 		break
+
 	// INR L
 	case 0x2c:
 		state.L++
 		state.PC++
 		break
+
 	// DCR L
 	case 0x2d:
 		state.L--
 		state.PC++
 		break
+
 	// MVI L, D8
 	case 0x2e:
 		UnimplementedInstruction(state)
 		break
+
 	// CMA
 	case 0x2f:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x30:
 		state.PC++
 		break
+
 	// LXI SP, D16
 	case 0x31:
 		UnimplementedInstruction(state)
 		break
+
 	// STA adr
 	case 0x32:
 		UnimplementedInstruction(state)
 		break
+
 	// INX SP
 	case 0x33:
 		UnimplementedInstruction(state)
 		break
+
 	// INR M
 	case 0x34:
 		break
+
 	// DCR M
 	case 0x35:
 		UnimplementedInstruction(state)
 		break
+
 	// MVI M, D8
 	case 0x36:
 		UnimplementedInstruction(state)
 		break
+
 	// STC
 	case 0x37:
 		UnimplementedInstruction(state)
 		break
+
 	// NOP
 	case 0x38:
 		break
+
 	// DAD SP
 	case 0x39:
 		UnimplementedInstruction(state)
 		break
+
 	// LDA adr
 	case 0x3a:
 		UnimplementedInstruction(state)
 		break
+
 	// DCX SP
 	case 0x3b:
 		UnimplementedInstruction(state)
 		break
+
 	// INR A
 	case 0x3c:
 		state.A++
 		state.PC++
 		break
+
 	case 0x3d:
 		state.A--
 		state.PC++
 		break
+
 	// MVI A, D8
 	case 0x3e:
 		UnimplementedInstruction(state)
 		break
+
 	// CMC
 	case 0x3f:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV B, B
 	case 0x40:
 		state.B = state.B
 		state.PC++
 		break
+
 	// MOV B, C
 	case 0x41:
 		state.B = state.C
 		state.PC++
 		break
+
 	// MOV B, D
 	case 0x42:
 		state.B = state.D
 		state.PC++
 		break
+
 	// MOV B, E
 	case 0x43:
 		state.B = state.E
 		state.PC++
 		break
+
 	// MOV B, H
 	case 0x44:
 		state.B = state.H
 		state.PC++
 		break
+
 	// MOV B, L
 	case 0x45:
 		state.B = state.L
 		break
+
 	// MOV B, M
 	case 0x46:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV B, A
 	case 0x47:
 		state.B = state.A
 		state.PC++
 		break
+
 	// MOV C, B
 	case 0x48:
 		state.C = state.B
 		state.PC++
 		break
+
 	// MOV C, C
 	case 0x49:
 		state.C = state.C
 		state.PC++
 		break
+
 	// MOV C, D
 	case 0x4a:
 		state.C = state.D
 		state.PC++
 		break
+
 	// MOV C, E
 	case 0x4b:
 		state.C = state.E
 		state.PC++
 		break
+
 	// MOV C, H
 	case 0x4c:
 		state.C = state.H
 		state.PC++
 		break
+
 	// MOV C, L
 	case 0x4d:
 		state.C = state.L
@@ -413,143 +483,172 @@ func Emulate8080Op(state *State8080) error {
 	case 0x4e:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV C, A
 	case 0x4f:
 		state.C = state.A
 		state.PC++
 		break
+
 	// MOV D, B
 	case 0x50:
 		state.D = state.B
 		state.PC++
 		break
+
 	// MOV D, C
 	case 0x51:
 		state.D = state.C
 		state.PC++
 		break
+
 	// MOV D, D
 	case 0x52:
 		state.D = state.D
 		state.PC++
 		break
+
 	// MOV D, E
 	case 0x53:
 		state.D = state.E
 		state.PC++
 		break
+
 	// MOV D, H
 	case 0x54:
 		state.D = state.H
 		state.PC++
 		break
+
 	// MOV D, L
 	case 0x55:
 		state.D = state.L
 		state.PC++
 		break
+
 	// MOV D, M
 	case 0x56:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV D, A
 	case 0x57:
 		state.D = state.A
 		state.PC++
 		break
+
 	// MOV E, B
 	case 0x58:
 		state.E = state.B
 		state.PC++
 		break
+
 	// MOV E, C
 	case 0x59:
 		state.E = state.C
 		state.PC++
 		break
+
 	// MOV E, D
 	case 0x5a:
 		state.E = state.D
 		state.PC++
 		break
+
 	// MOV E, E
 	case 0x5b:
 		state.E = state.E
 		state.PC++
 		break
+
 	// MOV E, H
 	case 0x5c:
 		state.E = state.H
 		state.PC++
 		break
+
 	// MOV E, L
 	case 0x5d:
 		state.E = state.L
 		state.PC++
 		break
+
 	// MOV E, M
 	case 0x5e:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV E, A
 	case 0x5f:
 		state.E = state.A
 		state.PC++
 		break
+
 	// MOV H, B
 	case 0x60:
 		state.H = state.B
 		state.PC++
 		break
+
 	// MOV H, C
 	case 0x61:
 		state.H = state.C
 		state.PC++
 		break
+
 	// MOV H, D
 	case 0x62:
 		state.H = state.D
 		state.PC++
 		break
+
 	// MOV H, E
 	case 0x63:
 		state.H = state.E
 		state.PC++
 		break
+
 	// MOV H, H
 	case 0x64:
 		state.H = state.H
 		state.PC++
 		break
+
 	// MOV H, L
 	case 0x65:
 		state.H = state.L
 		state.PC++
 		break
+
 	// MOV H, M
 	case 0x66:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV H, A
 	case 0x67:
 		state.H = state.A
 		state.PC++
 		break
+
 	// MOV L, B
 	case 0x68:
 		state.L = state.B
 		state.PC++
 		break
+
 	// MOV L, C
 	case 0x69:
 		state.L = state.C
 		state.PC++
 		break
+
 	// MOV L, D
 	case 0x6a:
 		state.L = state.D
 		state.PC++
 		break
+
 	// MOV L, E
 	case 0x6b:
 		state.L = state.E
@@ -560,40 +659,49 @@ func Emulate8080Op(state *State8080) error {
 		state.L = state.H
 		state.PC++
 		break
+
 	// MOV L, L
 	case 0x6d:
 		state.L = state.L
 		state.PC++
 		break
+
 	// MOV L, M
 	case 0x6e:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV L, A
 	case 0x6f:
 		state.L = state.A
 		state.PC++
 		break
+
 	// MOV M, B
 	case 0x70:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV M, C
 	case 0x71:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV M, D
 	case 0x72:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV M, E
 	case 0x73:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV M, H
 	case 0x74:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV M, L
 	case 0x75:
 		UnimplementedInstruction(state)
@@ -602,44 +710,53 @@ func Emulate8080Op(state *State8080) error {
 	case 0x76:
 		state.Quit <- struct{}{}
 		break
+
 	// MOV M, A
 	case 0x77:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV A, B
 	case 0x78:
 		state.A = state.B
 		state.PC++
 		break
+
 	// MOV A, C
 	case 0x79:
 		state.A = state.C
 		state.PC++
 		break
+
 	// MOV A, D
 	case 0x7a:
 		state.A = state.D
 		state.PC++
 		break
+
 	// MOV A, E
 	case 0x7b:
 		state.A = state.E
 		state.PC++
 		break
+
 	// MOV A, H
 	case 0x7c:
 		state.A = state.H
 		state.PC++
 		break
+
 	// MOV A, L
 	case 0x7d:
 		state.A = state.L
 		state.PC++
 		break
+
 	// MOV A, M
 	case 0x7e:
 		UnimplementedInstruction(state)
 		break
+
 	// MOV A, A
 	case 0x7f:
 		state.A = state.A
@@ -752,24 +869,38 @@ func Emulate8080Op(state *State8080) error {
 	case 0x88:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, C
 	case 0x89:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, D
 	case 0x8a:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, E
 	case 0x8b:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, H
 	case 0x8c:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, L
 	case 0x8d:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, M
 	case 0x8e:
 		UnimplementedInstruction(state)
 		break
+
+	// ADC A, A
 	case 0x8f:
 		UnimplementedInstruction(state)
 		break
