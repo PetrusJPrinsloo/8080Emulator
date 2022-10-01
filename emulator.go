@@ -1094,17 +1094,29 @@ func Emulate8080Op(state *State8080) error {
 	case 0xbf:
 		UnimplementedInstruction(state)
 		break
+
+	// RNZ
 	case 0xc0:
 		UnimplementedInstruction(state)
 		break
+
+	// POP B
 	case 0xc1:
 		UnimplementedInstruction(state)
 		break
+
+	// JNZ adr
 	case 0xc2:
-		UnimplementedInstruction(state)
+		if !state.Cc.Z {
+			state.PC = (uint16(state.Memory[state.PC+2]) << 8) | uint16(state.Memory[state.PC+1])
+		} else {
+			state.PC += 2
+		}
 		break
+
+	// JMP adr
 	case 0xc3:
-		UnimplementedInstruction(state)
+		state.PC = (uint16(state.Memory[state.PC+2]) << 8) | uint16(state.Memory[state.PC+1])
 		break
 	case 0xc4:
 		UnimplementedInstruction(state)
