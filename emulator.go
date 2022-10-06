@@ -25,12 +25,13 @@ type State8080 struct {
 	SP        uint16
 	PC        uint16
 	Memory    []byte
+	Stack     *Stack
 	Cc        ConditionCodes
 	IntEnable uint8
 	Quit      chan struct{}
 }
 
-func NewState8080(rom []byte, quit chan struct{}) *State8080 {
+func NewState8080(rom []byte, quit chan struct{}, stack *Stack) *State8080 {
 	state := State8080{}
 	state.Memory = make([]byte, 0x10000)
 	copy(state.Memory[0x0000:], rom)
@@ -38,6 +39,7 @@ func NewState8080(rom []byte, quit chan struct{}) *State8080 {
 	state.PC = 0x0000
 	state.IntEnable = 0
 	state.Quit = quit
+	state.Stack = stack
 	return &state
 }
 

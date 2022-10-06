@@ -42,7 +42,7 @@ func main() {
 	rom, err := RetrieveROM(filename)
 	check(err)
 	quit := make(chan struct{})
-	state := NewState8080(rom, quit)
+	state := NewState8080(rom, quit, NewStack())
 
 	// set ticker to run at 2MHz
 	// for each tick, run state.Step()
