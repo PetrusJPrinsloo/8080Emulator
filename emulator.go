@@ -27,7 +27,7 @@ type State8080 struct {
 	Memory    []byte
 	Stack     *Stack
 	Cc        ConditionCodes
-	IntEnable uint8
+	IntEnable bool
 	Quit      chan struct{}
 }
 
@@ -37,7 +37,7 @@ func NewState8080(rom []byte, quit chan struct{}, stack *Stack) *State8080 {
 	copy(state.Memory[0x0000:], rom)
 	state.SP = 0x0000
 	state.PC = 0x0000
-	state.IntEnable = 0
+	state.IntEnable = false
 	state.Quit = quit
 	state.Stack = stack
 	return &state
@@ -1354,7 +1354,7 @@ func Emulate8080Op(state *State8080) error {
 
 	// OUT D8
 	case 0xd3:
-		UnimplementedInstruction(state)
+		state.PC += 2
 		break
 
 	// CNC adr
@@ -1394,7 +1394,7 @@ func Emulate8080Op(state *State8080) error {
 
 	// IN D8
 	case 0xdb:
-		UnimplementedInstruction(state)
+		state.PC += 2
 		break
 
 	// CC adr
@@ -1512,9 +1512,9 @@ func Emulate8080Op(state *State8080) error {
 		UnimplementedInstruction(state)
 		break
 
-	// DI
+	// DI disable interrupts
 	case 0xf3:
-		UnimplementedInstruction(state)
+		state.IntEnable = false
 		break
 
 	// CP adr
@@ -1552,9 +1552,9 @@ func Emulate8080Op(state *State8080) error {
 		UnimplementedInstruction(state)
 		break
 
-	// EI
+	// EI enable interrupts
 	case 0xfb:
-		UnimplementedInstruction(state)
+		state.IntEnable = true
 		break
 
 	// CM adr
