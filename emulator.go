@@ -104,12 +104,13 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI B, D8
 	case 0x06:
-		UnimplementedInstruction(state)
+		state.B = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// RLC
 	case 0x07:
-		UnimplementedInstruction(state)
+
 		break
 
 	// NOP
@@ -187,7 +188,8 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI D, D8
 	case 0x16:
-		UnimplementedInstruction(state)
+		state.D = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// RAL
@@ -229,7 +231,8 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI E, D8
 	case 0x1e:
-		UnimplementedInstruction(state)
+		state.E = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// RAR
@@ -271,7 +274,8 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI H, D8
 	case 0x26:
-		UnimplementedInstruction(state)
+		state.H = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// DAA
@@ -313,7 +317,8 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI L, D8
 	case 0x2e:
-		UnimplementedInstruction(state)
+		state.L = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// CMA
@@ -385,6 +390,7 @@ func Emulate8080Op(state *State8080) error {
 		state.PC++
 		break
 
+	// DCR A
 	case 0x3d:
 		state.A--
 		state.PC++
@@ -392,7 +398,8 @@ func Emulate8080Op(state *State8080) error {
 
 	// MVI A, D8
 	case 0x3e:
-		UnimplementedInstruction(state)
+		state.A = state.Memory[state.PC+1]
+		state.PC += 2
 		break
 
 	// CMC
