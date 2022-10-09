@@ -25,13 +25,12 @@ type State8080 struct {
 	SP        uint16
 	PC        uint16
 	Memory    []byte
-	Stack     *Stack
 	Cc        ConditionCodes
 	IntEnable bool
 	Quit      chan struct{}
 }
 
-func NewState8080(rom []byte, quit chan struct{}, stack *Stack) *State8080 {
+func NewState8080(rom []byte, quit chan struct{}) *State8080 {
 	state := State8080{}
 	state.Memory = make([]byte, 0x10000)
 	copy(state.Memory[0x0000:], rom)
@@ -39,7 +38,6 @@ func NewState8080(rom []byte, quit chan struct{}, stack *Stack) *State8080 {
 	state.PC = 0x0000
 	state.IntEnable = false
 	state.Quit = quit
-	state.Stack = stack
 	return &state
 }
 
@@ -1286,7 +1284,9 @@ func Emulate8080Op(state *State8080) error {
 
 	// PUSH B
 	case 0xc5:
-		UnimplementedInstruction(state)
+		state.Memory[state.SP-1] = state.B
+		state.Memory[state.SP-2] = state.C
+		state.SP -= 2
 		break
 	case 0xc6:
 		answer := uint16(state.A) + state.PC + 1
@@ -1522,7 +1522,14 @@ func Emulate8080Op(state *State8080) error {
 
 	// POP PSW
 	case 0xf1:
-		UnimplementedInstruction(state)
+		state.A = state.Memory[state.SP+1]
+		psw := state.Memory[state.SP]
+		state.Cc.Z = (psw & 0x01) == 0x01
+		state.Cc.S = (psw & 0x02) == 0x02
+		state.Cc.P = (psw & 0x04) == 0x04
+		state.Cc.CY = (psw & 0x05) == 0x05
+		state.Cc.AC = (psw & 0x10) == 0x10
+		state.SP += 2
 		break
 
 	// JP adr
@@ -1542,7 +1549,27 @@ func Emulate8080Op(state *State8080) error {
 
 	// PUSH PSW
 	case 0xf5:
-		UnimplementedInstruction(state)
+		state.Memory[state.SP-1] = state.A
+		var psw uint8
+		if state.Cc.Z {
+			psw |= 0x01
+		}
+		if state.Cc.S {
+			psw |= 0x02
+		}
+		if state.Cc.P {
+			psw |= 0x04
+		}
+		if state.Cc.CY {
+			psw |= 0x08
+		}
+		if state.Cc.AC {
+			psw |= 0x10
+		}
+
+		state.Memory[state.SP-2] = psw
+		state.SP -= 2
+
 		break
 
 	// ORI D8
