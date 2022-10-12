@@ -321,7 +321,7 @@ func Emulate8080Op(state *State8080) error {
 
 	// CMA
 	case 0x2f:
-		UnimplementedInstruction(state)
+		state.A = ^state.A
 		break
 
 	// NOP
@@ -1467,7 +1467,13 @@ func Emulate8080Op(state *State8080) error {
 
 	// ANI D8
 	case 0xe6:
-		UnimplementedInstruction(state)
+		x := uint16(state.A) & uint16(state.Memory[state.PC+1])
+		state.Cc.Z = (x & 0xff) == 0
+		state.Cc.S = (x & 0x80) != 0
+		state.Cc.P = parity(uint8(x&0xff), 8)
+		state.Cc.CY = false
+		state.A = uint8(x & 0xff)
+		state.PC += 2
 		break
 
 	// RST 4
