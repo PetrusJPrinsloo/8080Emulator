@@ -1214,27 +1214,47 @@ func Emulate8080Op(state *State8080) error {
 
 	// CMP C
 	case 0xb9:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.C
+		state.Cc.S = (state.A - state.C) > 0x7f
+		state.Cc.P = parity(state.A-state.C, 8)
+		state.Cc.CY = state.A < state.C
+		state.PC++
 		break
 
 	// CMP D
 	case 0xba:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.D
+		state.Cc.S = (state.A - state.D) > 0x7f
+		state.Cc.P = parity(state.A-state.D, 8)
+		state.Cc.CY = state.A < state.D
+		state.PC++
 		break
 
 	// CMP E
 	case 0xbb:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.E
+		state.Cc.S = (state.A - state.E) > 0x7f
+		state.Cc.P = parity(state.A-state.E, 8)
+		state.Cc.CY = state.A < state.E
+		state.PC++
 		break
 
 	// CMP H
 	case 0xbc:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.H
+		state.Cc.S = (state.A - state.H) > 0x7f
+		state.Cc.P = parity(state.A-state.H, 8)
+		state.Cc.CY = state.A < state.H
+		state.PC++
 		break
 
 	// CMP L
 	case 0xbd:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.L
+		state.Cc.S = (state.A - state.L) > 0x7f
+		state.Cc.P = parity(state.A-state.L, 8)
+		state.Cc.CY = state.A < state.L
+		state.PC++
 		break
 
 	// CMP M
@@ -1244,7 +1264,11 @@ func Emulate8080Op(state *State8080) error {
 
 	// CMP A
 	case 0xbf:
-		UnimplementedInstruction(state)
+		state.Cc.Z = state.A == state.A
+		state.Cc.S = (state.A - state.A) > 0x7f
+		state.Cc.P = parity(state.A-state.A, 8)
+		state.Cc.CY = state.A < state.A
+		state.PC++
 		break
 
 	// RNZ
